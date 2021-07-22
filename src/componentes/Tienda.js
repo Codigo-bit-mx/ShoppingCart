@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import dashContext from '../context/dashbord/dashContext'
 import styled from 'styled-components';
-import ListaTienda from './ListaTienda'
+import ListaTienda from './ListaTienda';
+import History from './history/history';
 
 const ContMarket = styled.div`
     width: 100%;  
@@ -18,8 +19,8 @@ const Tienda = () => {
         <ContMarket>
 
         { viewproductos ?  <ListaTienda />  : 
-          viewhistory   ?  <p>vista historia</p> :
-          viewmetricas  ?   <p>vista metricas</p> : null
+          viewhistory   ?  <History /> :
+          viewmetricas  ?  <p>vista metricas</p> : null
         }
         
         </ContMarket>
