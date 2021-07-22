@@ -16,12 +16,12 @@ const Tienda = () => {
 
     return(
         <ContMarket>
+
         { viewproductos ?  <ListaTienda />  : 
           viewhistory   ?  <p>vista historia</p> :
           viewmetricas  ?   <p>vista metricas</p> : null
         }
-           
-
+        
         </ContMarket>
     )
 }
