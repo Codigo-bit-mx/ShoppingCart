@@ -17,8 +17,8 @@ const CarritoState = props => {
          },
          {
             id:234,
-            nombre: "Pescado",
-            categoria: "salmon",
+            nombre: "Salmon",
+            categoria: "pescado",
             descripcion: "filete de pescado salmon" 
          },
          {

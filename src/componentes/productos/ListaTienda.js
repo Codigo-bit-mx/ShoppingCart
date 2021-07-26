@@ -43,15 +43,17 @@ const ListaTienda = () => {
          
     })
 
-    productos.map((producto) => { //categorias
-        if( !cats.includes(producto.categoria) ){
-            cats.push(
-                producto.categoria
-             );
+    productos.forEach((producto) => { //categorias
+        if( !cats.includes(producto.categoria)){
+            console.log(producto.categoria)
+            cats.push({
+                categoria: producto.categoria
+            });
         }
-        cats.push(
-            producto.nombre
-        );
+             cats.push({
+                producto: producto.nombre
+             }
+            );
     });
 
     return ( 
