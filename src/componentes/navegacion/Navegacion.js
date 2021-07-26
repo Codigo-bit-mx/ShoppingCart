@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { MdDashboard, MdRestore, MdAssessment, MdShoppingCart } from "react-icons/md";
 
 //context
-import dashContext from '../context/dashbord/dashContext';
+import dashContext from '../../context/dashbord/dashContext';
 
 const NavegacionDIV = styled.div`
     height: 100%;

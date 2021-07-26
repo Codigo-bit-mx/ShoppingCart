@@ -45,7 +45,9 @@ const LI = styled.li`
 `;
 const Parrafo = styled.p`
     text-align: end;
-    font-size: 15px;
+    font-size: 20px;
+    color: #F9A109;
+    font-weight: bold;
 `;
 
 const History = () => {

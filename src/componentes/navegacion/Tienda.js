@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import dashContext from '../context/dashbord/dashContext'
+import dashContext from '../../context/dashbord/dashContext'
 import styled from 'styled-components';
-import ListaTienda from './ListaTienda';
-import History from './history/history';
+import ListaTienda from '../productos/ListaTienda';
+import History from '../history/history';
 
 const ContMarket = styled.div`
     width: 100%;  
