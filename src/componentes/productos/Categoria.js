@@ -1,22 +1,13 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import carritoContext from '../../context/carrito/carritoContext';
 
-const Categoria = () => {
-    
-    const carritosContext = useContext(carritoContext);
-    const {productos, cats } = carritosContext;
+const Categoria = ({categoria}) => {
 
+ 
     return ( 
-        <h1>hola</h1>
-        // categoria.map(cate => (
-        // <div>
-        //     <p>{}</p>
-        //     <ul>
-        //         <li>{cate}</li>
-        //     </ul>
-        // </div>
-        // ))
-
+       <div>
+          <h3>{categoria}</h3>
+       </div>
      );
 }
  

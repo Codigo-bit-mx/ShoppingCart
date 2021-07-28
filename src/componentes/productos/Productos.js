@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import styled from 'styled-components';
-
 import { HiPlus } from "react-icons/hi";
 // import carritoContext from '../../context/carrito/carritoContext';
 
@@ -32,8 +31,7 @@ const ContProducto = styled.div`
 
 const Productos = ({producto}) => {
 
-    // const carritosContext = useContext(carritoContext); 
-    const { nombre } = producto;
+   
     
     const validar = () => {
         console.log("si sirvio");
@@ -41,13 +39,13 @@ const Productos = ({producto}) => {
 
     return ( 
         <Fragment>
-       
+    
         <ContProducto> 
-            <p>{nombre}</p>
+            <p>{producto}</p>
             <span onClick={() => validar() } > <HiPlus /> </span>
          </ContProducto>
 
-         </Fragment>
+        </Fragment>
      );
 }
  

@@ -1,16 +1,27 @@
 import {
-    AGREGAR_PRODUCTO_CARRITO
+    AGREGAR_PRODUCTO_CARRITO,
+    LISTA_DE_PRODUCTOS
 } from '../../types/index';
 
-export default (state, action) => {
+const carritoReducer =  (state, action) => {
     switch(action.type){
 
         case AGREGAR_PRODUCTO_CARRITO:
             return (
                 console.log("agregar la carrito")
             )
+        
+        case LISTA_DE_PRODUCTOS:
+            return {
+                ...state,
+               cats: [ ...state.cats, action.payload ]
+            }
 
+         
         default: 
             return state;
     }
 }
+
+export default carritoReducer;
+

@@ -3,7 +3,8 @@ import carritoContext from './carritoContext';
 import carritoReducer from './carritoReducer';
 
 import {
-    AGREGAR_PRODUCTO_CARRITO
+    AGREGAR_PRODUCTO_CARRITO,
+    LISTA_DE_PRODUCTOS
 } from '../../types/index';
 
 const CarritoState = props => {
@@ -56,6 +57,12 @@ const CarritoState = props => {
             nombre: "chocolate",
             categoria: "dulce",
             descripcion: "miel de abeja" 
+         },
+         {
+            id:91011,
+            nombre: "trapeador",
+            categoria: "limpieza",
+            descripcion: "jala el agua" 
          }
 
         ],
@@ -72,6 +79,14 @@ const CarritoState = props => {
             type: AGREGAR_PRODUCTO_CARRITO
         })
     }
+
+    const agregarLista = (productos) => {
+        
+        dispatch({
+            type: LISTA_DE_PRODUCTOS,
+            payload: productos
+        })
+    }
     
     return( 
         <carritoContext.Provider
@@ -80,7 +95,8 @@ const CarritoState = props => {
                 productos: state.productos,
                 cats: state.cats,
                 item: state.item,
-                agregarCarrito
+                agregarCarrito,
+                agregarLista
 
             }}
         >
