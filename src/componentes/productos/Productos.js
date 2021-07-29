@@ -1,7 +1,7 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useContext} from 'react';
 import styled from 'styled-components';
 import { HiPlus } from "react-icons/hi";
-// import carritoContext from '../../context/carrito/carritoContext';
+import carritoContext from '../../context/carrito/carritoContext';
 
 const ContProducto = styled.div`
     display: grid;
@@ -29,21 +29,31 @@ const ContProducto = styled.div`
     }
 `;
 
-const Productos = ({producto}) => {
-
-   
+const Productos = ({nombre, producto}) => {
     
-    const validar = () => {
-        console.log("si sirvio");
+    const {id} = producto;
+
+    const carritosContext = useContext(carritoContext);
+    const { carrito, agregarCarrito, incrementarCantidad  } = carritosContext;
+    
+    const validar = (id, producto) => {
+       const existe = carrito.find(elemento => elemento.id === id);
+       if(existe){
+        incrementarCantidad(existe);
+       }else{
+        agregarCarrito(producto);
+       }       
     }
 
     return ( 
         <Fragment>
-    
+
+
         <ContProducto> 
-            <p>{producto}</p>
-            <span onClick={() => validar() } > <HiPlus /> </span>
+            <p>{nombre}</p>
+            <span onClick={() => validar(id, producto) } > <HiPlus /> </span>
          </ContProducto>
+  
 
         </Fragment>
      );

@@ -17,15 +17,15 @@ const Marco = styled.div`
   grid-gap: 1px;
 `;
 const ConTienda = styled.div`
-  background: #fafafb;
+  background: #FAFAFB;
 `;
 const ContProducto = styled.div`
   width: 100%;
-  background: #FFF0DE;
 `;
 
 
 const App = () =>  {
+  
   return (
     <DashState>
       <CarritoState>
@@ -41,10 +41,9 @@ const App = () =>  {
         <Tienda />
       </ConTienda>
 
-      <ContProducto>
+   
         <Item />
-      </ContProducto>
-
+     
 
         </Marco>
       </Contenedor>
@@ -52,6 +51,7 @@ const App = () =>  {
       </CarritoState>
     </DashState>
   );
+
 }
 
 export default App;

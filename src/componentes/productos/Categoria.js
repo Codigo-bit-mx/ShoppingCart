@@ -1,12 +1,10 @@
-import React, {useContext, useState} from 'react';
-import carritoContext from '../../context/carrito/carritoContext';
+import React from 'react';
 
 const Categoria = ({categoria}) => {
-
  
     return ( 
        <div>
-          <h3>{categoria}</h3>
+          <h3> {categoria} </h3>
        </div>
      );
 }

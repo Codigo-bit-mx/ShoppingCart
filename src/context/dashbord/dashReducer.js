@@ -1,7 +1,8 @@
 import {
     VISTA_PRODUCTO,
     VISTA_HISTORIA,
-    VISTA_METRICAS
+    VISTA_METRICAS,
+    VISTAS_PRODUCTOS
 } from '../../types/index';
 
 export default (state, action) => {
@@ -23,13 +24,20 @@ export default (state, action) => {
                 viewmetricas: false
             }
 
-            case VISTA_METRICAS:
-                return{
-                    ...state,
-                    viewproductos: false,
-                    viewhistory: false,
-                    viewmetricas: true
-                }
+       case VISTA_METRICAS:
+            return{
+                ...state,
+                viewproductos: false,
+                viewhistory: false,
+                viewmetricas: true
+            }
+
+        case VISTAS_PRODUCTOS: 
+            return{
+                ...state,
+                ventana: action.payload
+            }
+            
 
         default:
             return state;

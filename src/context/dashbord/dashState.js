@@ -5,7 +5,8 @@ import dashReducer from './dashReducer';
 import {
     VISTA_PRODUCTO,
     VISTA_HISTORIA,
-    VISTA_METRICAS
+    VISTA_METRICAS,
+    VISTAS_PRODUCTOS
 } from '../../types/index';
 
 
@@ -13,7 +14,8 @@ const DashState = props => {
     const initialState = {
         viewproductos: true,
         viewhistory: false,
-        viewmetricas: false
+        viewmetricas: false,
+        ventana: 'item'
     }
 
     const [state, dispatch] = useReducer(dashReducer, initialState);
@@ -36,6 +38,12 @@ const DashState = props => {
         })
     }
 
+    const cambioVentana = (estado) => {
+        dispatch({
+            type: VISTAS_PRODUCTOS,
+            payload: estado
+        })
+    }
 
     return(
         <dashContext.Provider
@@ -43,9 +51,11 @@ const DashState = props => {
             viewproductos: state.viewproductos,
             viewhistory: state.viewhistory,
             viewmetricas: state.viewmetricas,
+            ventana: state.ventana,
             vistaProducto,
             vistaHistoria,
-            vistaMetricas
+            vistaMetricas,
+            cambioVentana
             }}
         >
             {props.children}
