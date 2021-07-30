@@ -5,7 +5,8 @@ import {
     INCREMENTAR_CANTIDAD_CARRITO,
     DECREMENTAR_CANTIDAD_CARRITO,
     ELIMINAR_PRODUCTO_CARRITO,
-    VISTAS_DEL_CARRITO
+    VISTAS_DEL_CARRITO,
+    LIMPIEZA_CATEGORIAS_TIENDA
 } from '../../types/index';
 
 const carritoReducer =  (state, action) => {
@@ -51,6 +52,13 @@ const carritoReducer =  (state, action) => {
                 ventana: action.payload.estado,
                 info: state.productos.find(producto =>  producto.id === action.payload.id)
             }
+
+        case LIMPIEZA_CATEGORIAS_TIENDA:
+            return{
+                ...state,
+                cats: []
+            }
+        
 
         default: 
             return state;

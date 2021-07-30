@@ -19,23 +19,12 @@ const Parrafo = styled.p`
 const ListaTienda = () => {
 
    const carritosContext = useContext(carritoContext);
-   const { productos, cats, agregarLista } = carritosContext;
-
-   productos.sort((o1, o2)=> { //ordenamiento alfabetico en categoria!
-        if(o1.categoria < o2.categoria){
-            return -1;
-        }else if (o1.categoria > o2.categoria){
-            return 1;
-        }else{
-            return 0;
-        }
-         
-   })
+   const { productos, cats, agregarLista, clearCategorias } = carritosContext;
 
     useEffect(() => {
-
-        let lastCategory = null;
-        productos.sort((o1, o2)=> { //ordenamiento alfabetico en categoria!
+      clearCategorias();
+      let lastCategory = null;
+      productos.sort((o1, o2)=> { //ordenamiento alfabetico en categoria!
             if(o1.categoria < o2.categoria){
                 return -1;
             }else if (o1.categoria > o2.categoria){
@@ -46,7 +35,7 @@ const ListaTienda = () => {
              
        })
 
-        productos.forEach((producto) => { // obtener los productos de ma
+      productos.forEach((producto) => { // obtener los productos de ma
             if(producto.categoria !== lastCategory) {
                 agregarLista(
                  <Categoria 
@@ -67,6 +56,9 @@ const ListaTienda = () => {
 
                 lastCategory = producto.categoria;
             })
+
+      
+    
     }, [productos]);
    
     return ( 

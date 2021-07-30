@@ -8,7 +8,8 @@ import {
     INCREMENTAR_CANTIDAD_CARRITO,
     DECREMENTAR_CANTIDAD_CARRITO,
     ELIMINAR_PRODUCTO_CARRITO,
-    VISTAS_DEL_CARRITO
+    VISTAS_DEL_CARRITO,
+    LIMPIEZA_CATEGORIAS_TIENDA
 } from '../../types/index';
 
 const CarritoState = props => {
@@ -117,13 +118,19 @@ const CarritoState = props => {
     }
 
     const cambioVentana = ( estado, id ) => {
-        console.log(id)
+        
         dispatch({
             type: VISTAS_DEL_CARRITO,
             payload: {
                 estado: estado,
                 id: id
             } 
+        })
+    }
+
+    const clearCategorias = () => {
+        dispatch({
+            type: LIMPIEZA_CATEGORIAS_TIENDA
         })
     }
 
@@ -142,9 +149,8 @@ const CarritoState = props => {
                 incrementarCantidad,
                 decrementarCantidad,
                 eliminarProducto,
-                cambioVentana
-              
-
+                cambioVentana,
+                clearCategorias
             }}
         >
             {props.children}
