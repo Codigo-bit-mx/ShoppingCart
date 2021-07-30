@@ -1,18 +1,22 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components';
-import dashsContext from '../../../context/dashbord/dashContext';
-
+import carritosContext from '../../../context/carrito/carritoContext';
 
 
 
 const WindowInf = () => {
     
-    const dashContext = useContext(dashsContext);
-    const { cambioVentana } = dashContext;
+
+    const carritoContext = useContext( carritosContext );
+    const { productos, cambioVentana } = carritoContext;
 
     return ( 
-        <p>hola soy informacion</p>
-     );
+
+        <div>
+            <p>hola soy la informacion jaja</p>
+        </div>
+
+        );
 }
  
 export default WindowInf;

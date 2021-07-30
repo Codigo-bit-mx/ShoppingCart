@@ -1,6 +1,9 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components';
-import dashsContext from '../../../context/dashbord/dashContext';
+import carritosContext from '../../../context/carrito/carritoContext';
+import { HiPlus } from "react-icons/hi";
+import { FaTrashAlt } from "react-icons/fa";
+import { MdRemove } from 'react-icons/md';
 
 const ContITEM = styled.div`
     margin: 16px auto 0 auto;
@@ -31,15 +34,82 @@ const DivBUTTON = styled.div`
         text-align: center;
         border-radius: 12px;
         border: 1px solid #000;
-        font-family: 'Quicksand', sans-serif;;
+        font-family: 'Quicksand', sans-serif;
         font-size: 14px;
     }
 `;
+const DivShopp = styled.div`
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    margin-top: 13px;
+    p{
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+    }
+`;
+const DivPSC = styled.div`
+    background: white;
+    margin: 0 16px;
+    border-radius: 12px;
+    padding: 7px 0;
+    span {
+        margin-right: 3px;
+        font-size: 20px;
+        color: #F9A109;
+        margin: auto 0;
+    }
+`; 
+const BtnPSC = styled.button`
+    /* margin: 4px 1em; */
+    padding: 2px 13px;
+    border-radius: 15px;
+    border: 2px solid #F9A109;
+    box-sizing: border-box;
+    background: transparent;
+    font-family: 'Quicksand', sans-serif;
+    color: #F9A109;
+    margin-right: 10px;
+`;
+const CestaDIV = styled.div`
+    margin-top: 2em;
+    padding:  1em 10px;
+    background: white;
+    border-radius: 12px;
+`;
+const InputCST = styled.input`
+    padding: 10px 3px;
+    border-radius: 12px;
+    border: 1px solid #BDBDBD;
+`;
+const BtnCST = styled.button`
+    background: #F9A109;
+    padding: 10px 0;
+    border: 1px solid #F9A109;
+    border-radius: 10px;
+    color: white;
+`;
+
+
 
 const WindowCarrito = () => {
 
-    const dashContext = useContext(dashsContext);
-    const { cambioVentana } = dashContext;
+    const carritoContext = useContext(carritosContext);
+    const { carrito,
+            cambioVentana,
+            incrementarCantidad,
+            decrementarCantidad,
+            eliminarProducto
+             } = carritoContext;
+
+    const ReducirOBorrar = (cart) => {
+        const existe = carrito.find( elementCart => elementCart.id === cart.id);
+        if(existe.cantidad === 1) {
+            eliminarProducto(cart);
+        }else {
+            decrementarCantidad(cart);
+        }
+    }
 
     return ( 
 
@@ -50,6 +120,43 @@ const WindowCarrito = () => {
            <button onClick={() => cambioVentana('newproducto')}> Agregar </button>
            </DivBUTTON>
        </MarcoProduct>
+
+        <h3>Lista de compras</h3>
+
+        {carrito.map((cart) => (
+            <DivShopp key={cart.id}>
+                <p>{cart.nombre}</p>
+            
+            <DivPSC>
+            <span onClick={() => eliminarProducto(cart)} ><FaTrashAlt /></span>
+           
+            <span onClick={() =>  ReducirOBorrar(cart)}> <MdRemove /> </span>
+            <BtnPSC>{cart.cantidad}pz</BtnPSC>
+            <span onClick={() => incrementarCantidad(cart)}><HiPlus /> </span>
+            </DivPSC>
+            
+            </DivShopp>
+        ))}
+
+       {carrito.length !== 0 
+        ? 
+
+       ( <CestaDIV>
+            <form>
+                <InputCST 
+                    name="canasta"
+                    type="text"
+                    placeholder="Guardar la cesta"
+                />
+                <BtnCST>
+                    Guardar
+                </BtnCST>
+            </form>
+        </CestaDIV>) 
+         :
+
+        null}
+
       </ContITEM>
      
      );

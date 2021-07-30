@@ -32,9 +32,10 @@ const ContProducto = styled.div`
 const Productos = ({nombre, producto}) => {
     
     const {id} = producto;
-
+   
+    //carrito
     const carritosContext = useContext(carritoContext);
-    const { carrito, agregarCarrito, incrementarCantidad  } = carritosContext;
+    const { carrito, agregarCarrito, incrementarCantidad, cambioVentana  } = carritosContext;
     
     const validar = (id, producto) => {
        const existe = carrito.find(elemento => elemento.id === id);
@@ -50,7 +51,7 @@ const Productos = ({nombre, producto}) => {
 
 
         <ContProducto> 
-            <p>{nombre}</p>
+            <p onClick={() => cambioVentana('informacion')}>{nombre}</p>
             <span onClick={() => validar(id, producto) } > <HiPlus /> </span>
          </ContProducto>
   

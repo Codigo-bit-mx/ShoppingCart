@@ -5,7 +5,10 @@ import carritoReducer from './carritoReducer';
 import {
     AGREGAR_PRODUCTO_CARRITO,
     LISTA_DE_PRODUCTOS,
-    INCREMENTAR_CANTIDAD_CARRITO
+    INCREMENTAR_CANTIDAD_CARRITO,
+    DECREMENTAR_CANTIDAD_CARRITO,
+    ELIMINAR_PRODUCTO_CARRITO,
+    VISTAS_DEL_CARRITO
 } from '../../types/index';
 
 const CarritoState = props => {
@@ -70,6 +73,8 @@ const CarritoState = props => {
         cats: [],
         carrito: [],
         total: 0,
+        ventana: 'item',
+        info: []
         
     }
 
@@ -96,6 +101,28 @@ const CarritoState = props => {
         })
     }
 
+    const decrementarCantidad = (cart) => {
+        dispatch({
+            type: DECREMENTAR_CANTIDAD_CARRITO,
+            payload: cart
+        })
+    }
+
+    const eliminarProducto = (producto) => {
+        dispatch({
+            type: ELIMINAR_PRODUCTO_CARRITO,
+            payload: producto
+        })
+    }
+
+    const cambioVentana = (estado) => {
+        dispatch({
+            type: VISTAS_DEL_CARRITO,
+            payload: estado
+        })
+    }
+
+
     return( 
         <carritoContext.Provider
             value={{
@@ -107,6 +134,9 @@ const CarritoState = props => {
                 agregarLista,
                 agregarCarrito,
                 incrementarCantidad,
+                decrementarCantidad,
+                eliminarProducto,
+                cambioVentana
               
 
             }}

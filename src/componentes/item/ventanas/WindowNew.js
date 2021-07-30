@@ -1,15 +1,13 @@
 import React, {useContext} from 'react';
 import styled from 'styled-components';
-import dashsContext from '../../../context/dashbord/dashContext';
+import carritosContext from '../../../context/carrito/carritoContext';
 
 const MarcoForm = styled.div`
     padding: 1em 2em;
 `;
-
 const Form = styled.form`
     margin-top: 2em;
 `;
-
 const Label = styled.label`
     font-family: 'Quicksand', sans-serif; 
     font-size: 14px;
@@ -61,8 +59,8 @@ const BtnCancel = styled.button`
 
 const WindowNew = () => {
     
-    const dashContext = useContext(dashsContext);
-    const { cambioVentana } = dashContext;
+    const carritoContext = useContext(carritosContext);
+    const { cambioVentana } = carritoContext;
 
     return ( 
         

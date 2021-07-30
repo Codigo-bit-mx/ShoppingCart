@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import dashsContext from '../../context/dashbord/dashContext';
+import styled                from 'styled-components';
+import carritosContext       from '../../context/carrito/carritoContext';
 
 //pestañas  
 import WindowCarrito from './ventanas/WindowCarrito';
-import WindowInf from './ventanas/WindowInf';
-import WindowNew from './ventanas/WindowNew';
+import WindowInf     from './ventanas/WindowInf';
+import WindowNew     from './ventanas/WindowNew';
 
 const ContVentanas = styled.div`
     background: ${({ ventana }) => ventana === 'item' ? '#FFF0DE' :
@@ -16,8 +16,8 @@ const ContVentanas = styled.div`
 
 const Item = () => {
 
-    const dashContext = useContext(dashsContext);
-    const { ventana, cambioVentana } = dashContext;
+    const carritoContext = useContext(carritosContext);
+    const { ventana, productos } = carritoContext;
 
     return (  
      
@@ -35,7 +35,7 @@ const Item = () => {
          :
         ventana === "informacion"
          ?
-          ( <WindowInf /> )
+          ( <WindowInf productos = {productos} /> )
          :
         null
         }
