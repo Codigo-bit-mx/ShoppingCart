@@ -42,7 +42,7 @@ const carritoReducer =  (state, action) => {
         case ELIMINAR_PRODUCTO_CARRITO: 
             return{
                 ...state,
-                carrito: state.carrito.filter(producto => producto.id === action.payload)
+                carrito: state.carrito.filter(producto => producto.id !== action.payload)
             }
 
         case VISTAS_DEL_CARRITO: 

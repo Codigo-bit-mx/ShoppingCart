@@ -105,7 +105,7 @@ const WindowCarrito = () => {
     const ReducirOBorrar = (cart) => {
         const existe = carrito.find( elementCart => elementCart.id === cart.id);
         if(existe.cantidad === 1) {
-            eliminarProducto(cart);
+            eliminarProducto(cart.id);
         }else {
             decrementarCantidad(cart);
         }
@@ -128,7 +128,7 @@ const WindowCarrito = () => {
                 <p>{cart.nombre}</p>
             
             <DivPSC>
-            <span onClick={() => eliminarProducto(cart)} ><FaTrashAlt /></span>
+            <span onClick={() => eliminarProducto(cart.id)} ><FaTrashAlt /></span>
            
             <span onClick={() =>  ReducirOBorrar(cart)}> <MdRemove /> </span>
             <BtnPSC>{cart.cantidad}pz</BtnPSC>
