@@ -45,10 +45,11 @@ const carritoReducer =  (state, action) => {
                 carrito: state.carrito.filter(producto => producto.id !== action.payload)
             }
 
-        case VISTAS_DEL_CARRITO: 
+        case VISTAS_DEL_CARRITO:  // funciona para el cambio de ventana y la informacion del producto
             return{
                 ...state,
-                ventana: action.payload
+                ventana: action.payload.estado,
+                info: state.productos.find(producto =>  producto.id === action.payload.id)
             }
 
         default: 

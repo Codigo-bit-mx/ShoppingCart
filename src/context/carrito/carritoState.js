@@ -18,8 +18,9 @@ const CarritoState = props => {
             id:123,
             nombre: "Aguacate",
             categoria: 'Vegetal',
-            descripcion: "fruta color verde" 
-         },
+            descripcion: "El aguacate es un fruto exótico carnoso que se obtiene del árbol tropical del mismo nombre. En algunas partes de América del Sur se conoce como Palta. Presenta unas dimensiones de 5-6 cm de longitud. El peso normal oscila entre 200-400 g, aunque pueden encontrarse piezas de hasta 2 kg de peso.",
+            img:'img/aguacate.jpg'
+        },
          {
             id:234,
             nombre: "Salmon",
@@ -115,10 +116,14 @@ const CarritoState = props => {
         })
     }
 
-    const cambioVentana = (estado) => {
+    const cambioVentana = ( estado, id ) => {
+        console.log(id)
         dispatch({
             type: VISTAS_DEL_CARRITO,
-            payload: estado
+            payload: {
+                estado: estado,
+                id: id
+            } 
         })
     }
 
@@ -131,6 +136,7 @@ const CarritoState = props => {
                 cats: state.cats,
                 carrito: state.carrito,
                 ventana: state.ventana,
+                info: state.info,
                 agregarLista,
                 agregarCarrito,
                 incrementarCantidad,

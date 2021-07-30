@@ -91,7 +91,6 @@ const BtnCST = styled.button`
 `;
 
 
-
 const WindowCarrito = () => {
 
     const carritoContext = useContext(carritosContext);
@@ -123,7 +122,7 @@ const WindowCarrito = () => {
 
         <h3>Lista de compras</h3>
 
-        {carrito.map((cart) => (
+       {carrito.map((cart) => (
             <DivShopp key={cart.id}>
                 <p>{cart.nombre}</p>
             

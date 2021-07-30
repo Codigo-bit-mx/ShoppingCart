@@ -49,13 +49,11 @@ const Productos = ({nombre, producto}) => {
     return ( 
         <Fragment>
 
-
         <ContProducto> 
-            <p onClick={() => cambioVentana('informacion')}>{nombre}</p>
+            <p onClick={() => cambioVentana('informacion', id)}>{nombre}</p>
             <span onClick={() => validar(id, producto) } > <HiPlus /> </span>
          </ContProducto>
   
-
         </Fragment>
      );
 }
