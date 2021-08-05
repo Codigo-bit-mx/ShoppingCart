@@ -7,6 +7,7 @@ import Item from './componentes/item/Item';
 //context
 import DashState from './context/dashbord/dashState';
 import CarritoState from './context/carrito/carritoState';
+import ProductosState from './context/productos/productosState';
 
 const Contenedor = styled.div`
     width: 100%;
@@ -28,6 +29,7 @@ const App = () =>  {
   
   return (
     <DashState>
+      <ProductosState>
       <CarritoState>
 
       <Contenedor>
@@ -49,6 +51,7 @@ const App = () =>  {
       </Contenedor>
 
       </CarritoState>
+      </ProductosState>
     </DashState>
   );
 

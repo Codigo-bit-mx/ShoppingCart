@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import carritoContext from '../../context/carrito/carritoContext';
+import productosContext from '../../context/productos/productosContext';
 import styled from 'styled-components';
 import Categoria from './Categoria';
 import Productos from './Productos';
-
 
 const ContMarco = styled.div`
     padding: 0em 1em 1em 3em;
@@ -15,52 +14,50 @@ const Parrafo = styled.p`
     font-size: 24px;
 `;
 
-
 const ListaTienda = () => {
 
-   const carritosContext = useContext(carritoContext);
-   const { productos, cats, agregarLista, clearCategorias } = carritosContext;
+   const productoContext = useContext(productosContext);
+   const { productos, cats, cargando, obtenerProductos, agregarLista, clearCategorias } = productoContext;
 
-    useEffect(() => {
-      clearCategorias();
-      let lastCategory = null;
-      productos.sort((o1, o2)=> { //ordenamiento alfabetico en categoria!
-            if(o1.categoria < o2.categoria){
-                return -1;
-            }else if (o1.categoria > o2.categoria){
-                return 1;
-            }else{
-                return 0;
-            }
-             
-       })
-
-      productos.forEach((producto) => { // obtener los productos de ma
-            if(producto.categoria !== lastCategory) {
-                agregarLista(
-                 <Categoria 
-                        key={Math.random().toString(36).substr(2, 9)}
-                        categoria={producto.categoria}
-                    />
-                );
-            }
-                agregarLista(   
-                  
-                    <Productos 
-                        key={Math.random().toString(36).substr(2, 9)}
-                        nombre={producto.nombre}
-                        producto={producto}
-                    />
-                
-                );
-
-                lastCategory = producto.categoria;
-            })
-
-      
-    
-    }, [productos]);
+     useEffect( () => {
+       
+        obtenerProductos(); 
+        clearCategorias();     
+       
+        let lastCategory = null;
+        productos.sort((o1, o2)=> { //ordenamiento alfabetico en categoria!
+              if(o1.categoria < o2.categoria){
+                  return -1;
+              }else if (o1.categoria > o2.categoria){
+                  return 1;
+              }else{
+                  return 0;
+              }
+         });
    
+        productos.map((producto) => { // obtener los productos de ma               
+            if(producto.categoria !== lastCategory) {
+                  agregarLista(
+                   <Categoria 
+                          key={producto._id}
+                          categoria={producto.categoria}
+                      />
+                  );
+            }
+                  agregarLista(   
+                      <Productos 
+                          key={producto.id}
+                          nombre={producto.nombre}
+                          producto={producto}
+                      />
+                  );
+   
+                  lastCategory = producto.categoria;
+         });
+       //eslint-disable-next-line
+     }, [cargando]);
+
+    
     return ( 
 
         <ContMarco>

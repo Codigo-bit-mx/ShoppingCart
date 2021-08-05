@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled                from 'styled-components';
-import carritosContext       from '../../context/carrito/carritoContext';
+// import carritosContext    from '../../context/carrito/carritoContext';
+import productosContext      from '../../context/productos/productosContext';
 
 //pestañas  
 import WindowCarrito from './ventanas/WindowCarrito';
@@ -16,8 +17,8 @@ const ContVentanas = styled.div`
 
 const Item = () => {
 
-    const carritoContext = useContext(carritosContext);
-    const { ventana, productos } = carritoContext;
+    const productoContext = useContext(productosContext);
+    const { ventana, productos} = productoContext;
 
     return (  
      

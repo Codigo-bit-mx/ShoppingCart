@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
-import styled from 'styled-components';
-import carritosContext from '../../../context/carrito/carritoContext';
+import styled              from 'styled-components';
+import carritosContext     from '../../../context/carrito/carritoContext';
+import productosContext    from '../../../context/productos/productosContext';
 
 const MarcoForm = styled.div`
     padding: 1em 2em;
@@ -59,8 +60,33 @@ const BtnCancel = styled.button`
 
 const WindowNew = () => {
     
-    const carritoContext = useContext(carritosContext);
-    const { cambioVentana } = carritoContext;
+    const productoContext = useContext(productosContext);
+    const { nombre,
+            descripcion,
+            ruta,
+            categoria,
+            addProducto,
+            subirIMG,
+            cambioVentana,
+            agregarNombre,
+            agrgearDescripcion,
+            agregarCategoria,
+            mostrarAlerta } = productoContext;
+    
+    const inputImg = (e) => {
+        const formData = new FormData();
+        formData.append('archivo', e.target.files[0]);
+        subirIMG(formData);
+    }
+
+    const envioDatos = (e) => {
+        e.preventDefault();
+        if(nombre.trim() === "" || descripcion.trim() === "" || ruta.trim() === "" || categoria.trim() === "" ) {
+            mostrarAlerta();
+        }else{
+            addProducto();
+        }
+    }   
 
     return ( 
         
@@ -73,7 +99,9 @@ const WindowNew = () => {
                 <Input 
                     name="nombre"
                     type="text" 
-                    placeholder="Nombre del Producto"     
+                    placeholder="Nombre del Producto"  
+                    value = {nombre}
+                    onChange={ e => agregarNombre(e.target.value) }   
                 />
 
                 <Label htmlFor="nota">Nota:</Label>
@@ -81,13 +109,16 @@ const WindowNew = () => {
                     name="nota"
                     maxLength="250" 
                     placeholder="Agrega una nota"
+                    value={descripcion}
+                    onChange={ e => agrgearDescripcion(e.target.value) } 
                 ></TextAREA>
 
                 <Label htmlFor="imagen">Imagen:</Label>
                 <Input 
                     name="imagen"
-                    type="text" 
-                    placeholder="Agrega una Imagen"    
+                    type="file" 
+                    placeholder="Agrega una Imagen" 
+                    onChange={ e => inputImg (e) }   
                 />
 
                 <Label htmlFor="categoria">Categoria:</Label>
@@ -95,12 +126,14 @@ const WindowNew = () => {
                     name="categoria"
                     type="text" 
                     placeholder="Agregar una categoria"
+                    value={categoria}
+                    onChange={ e => agregarCategoria(e.target.value) }
                     />
             </Form>
 
             <ContentBTN>
                 <BtnCancel onClick={() => cambioVentana('item')}>Cancelar</BtnCancel>
-                <BtnSave>Guardar</BtnSave>
+                <BtnSave onClick={ e => envioDatos(e)} >Guardar</BtnSave>
             </ContentBTN>
            
             </MarcoForm>

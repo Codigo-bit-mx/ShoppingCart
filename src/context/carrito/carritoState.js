@@ -4,91 +4,58 @@ import carritoReducer from './carritoReducer';
 
 import {
     AGREGAR_PRODUCTO_CARRITO,
-    LISTA_DE_PRODUCTOS,
     INCREMENTAR_CANTIDAD_CARRITO,
     DECREMENTAR_CANTIDAD_CARRITO,
     ELIMINAR_PRODUCTO_CARRITO,
-    VISTAS_DEL_CARRITO,
-    LIMPIEZA_CATEGORIAS_TIENDA
+    AGREGAR_NOMBRE_CARRITO
 } from '../../types/index';
+import clienteAxios from '../../config/axios';
+
+// import clienteAxios from '../../config/axios';
 
 const CarritoState = props => {
     const initialState = {
-        productos: [
-         {
-            id:123,
-            nombre: "Aguacate",
-            categoria: 'Vegetal',
-            descripcion: "El aguacate es un fruto exótico carnoso que se obtiene del árbol tropical del mismo nombre. En algunas partes de América del Sur se conoce como Palta. Presenta unas dimensiones de 5-6 cm de longitud. El peso normal oscila entre 200-400 g, aunque pueden encontrarse piezas de hasta 2 kg de peso.",
-            img:'img/aguacate.jpg'
-        },
-         {
-            id:234,
-            nombre: "Salmon",
-            categoria: "Pescado",
-            descripcion: "filete de pescado salmon" 
-         },
-         {
-            id:345,
-            nombre: "Melon",
-            categoria: "Vegetal",
-            descripcion: "fruta de color naranja" 
-         },
-         {
-            id:456,
-            nombre: "Miel",
-            categoria: "Alacena",
-            descripcion: "miel de abeja" 
-         },
-         {
-            id:567,
-            nombre: "tomate",
-            categoria: 'Vegetal',
-            descripcion: "fruta color verde" 
-         },
-         {
-            id:678,
-            nombre: "filete",
-            categoria: "Pescado",
-            descripcion: "filete de pescado salmon" 
-         },
-         {
-            id:789,
-            nombre: "sandia",
-            categoria: "Vegetal",
-            descripcion: "fruta de color naranja" 
-         },
-         {
-            id:8910,
-            nombre: "chocolate",
-            categoria: "Dulce",
-            descripcion: "miel de abeja" 
-         },
-         {
-            id:91011,
-            nombre: "trapeador",
-            categoria: "Limpieza",
-            descripcion: "jala el agua" 
-         }
-
-        ],
-        cats: [],
         carrito: [],
         total: 0,
-        ventana: 'item',
-        info: []
-        
+        nombre: '',
+        productos: []
     }
 
     const [ state, dispatch ] = useReducer (carritoReducer, initialState);
 
-    const agregarLista = (productos) => {    
-        dispatch({
-            type: LISTA_DE_PRODUCTOS,
-            payload: productos
-        })
+    const guardarCarrito = async () => {
+      const carrito = state.carrito;
+      const data = {
+            id : '123',
+            nombre : state.nombre,
+            fecha : '12-05-2150',
+            productos: 
+                carrito.map(car =>  (
+                   {
+                     id: car.id,
+                     nombre: car.nombre, 
+                     cantidad: car.cantidad,
+                   } 
+               ))
+            }
+        try {
+            await clienteAxios.post('api/carrito', data);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
+    const obtenerElementosCart = async () => {
+        try{
+            const datos = await clienteAxios.get('/api/carrito');
+            console.log(datos)
+        }catch(error){
+            console.log(error)
+        }
+
+    } 
+  
+    //Funciones para el carrito
     const agregarCarrito = (producto) => {
         dispatch({
             type: AGREGAR_PRODUCTO_CARRITO,
@@ -117,40 +84,28 @@ const CarritoState = props => {
         })
     }
 
-    const cambioVentana = ( estado, id ) => {
-        
+    const nombreCarrito = (nombre) => {
         dispatch({
-            type: VISTAS_DEL_CARRITO,
-            payload: {
-                estado: estado,
-                id: id
-            } 
+            type: AGREGAR_NOMBRE_CARRITO,
+            payload: nombre
         })
     }
-
-    const clearCategorias = () => {
-        dispatch({
-            type: LIMPIEZA_CATEGORIAS_TIENDA
-        })
-    }
+   
+   
 
 
     return( 
         <carritoContext.Provider
             value={{
-
-                productos: state.productos,
-                cats: state.cats,
                 carrito: state.carrito,
-                ventana: state.ventana,
                 info: state.info,
-                agregarLista,
                 agregarCarrito,
                 incrementarCantidad,
                 decrementarCantidad,
                 eliminarProducto,
-                cambioVentana,
-                clearCategorias
+                nombreCarrito,
+                guardarCarrito,
+                obtenerElementosCart
             }}
         >
             {props.children}

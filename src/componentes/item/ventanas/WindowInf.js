@@ -1,16 +1,15 @@
 import React, {useContext} from 'react';
-import styled from 'styled-components';
-import carritosContext from '../../../context/carrito/carritoContext';
-import { MdUndo } from "react-icons/md";
+import styled              from 'styled-components';
+import carritosContext     from '../../../context/carrito/carritoContext';
+import productosContext from '../../../context/productos/productosContext';
+import { MdUndo }          from "react-icons/md";
 
 const ContWinf = styled.div`
     width: 100;
-
     p{
         margin: 2em 0px 2em 14px;
         color: #F9A109;
         cursor: pointer;
-
     }
 `;
 
@@ -35,18 +34,20 @@ const MarcoWinf = styled.div`
 
 const WindowInf = () => {
     
+    const productoContext = useContext( productosContext );
+    const { info, cambioVentana } = productoContext;
 
-    const carritoContext = useContext( carritosContext );
-    const { productos, info, cambioVentana } = carritoContext;
+    // const carritoContext = useContext( carritosContext );
+    // const { productos, info, cambioVentana } = carritoContext;
  
-    const {nombre, categoria, descripcion ,img} = info;
+    const {nombre, categoria, descripcion, ruta} = info;
 
     return ( 
         <ContWinf>
             <p onClick={() => cambioVentana('item')}><span><MdUndo/></span> Regresar</p>
             <MarcoWinf>
 
-            <img src={img} alt="imagen del producto"/>
+            <img src={ruta} alt="imagen del producto"/>
             <p>Nombre:</p>
             <h4>{nombre}</h4>
             <p>Categoria:</p>

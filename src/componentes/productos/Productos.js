@@ -2,6 +2,7 @@ import React, {Fragment, useContext} from 'react';
 import styled from 'styled-components';
 import { HiPlus } from "react-icons/hi";
 import carritoContext from '../../context/carrito/carritoContext';
+import productosContext from '../../context/productos/productosContext';
 
 const ContProducto = styled.div`
     display: grid;
@@ -18,6 +19,7 @@ const ContProducto = styled.div`
         font-style: normal;
         font-weight: bold;
         font-size: 14px;
+        cursor: pointer;
     }
     span{
         padding: 0;
@@ -26,16 +28,20 @@ const ContProducto = styled.div`
         font-size: 19px;
         color: #C1C1C4;
         text-align: right;
+        cursor: pointer;
     }
 `;
 
 const Productos = ({nombre, producto}) => {
     
-    const {id} = producto;
-   
+    const id = producto.id;
+    
+    //productos
+    const productoContext = useContext(productosContext);
+    const { cambioVentana } = productoContext;
     //carrito
     const carritosContext = useContext(carritoContext);
-    const { carrito, agregarCarrito, incrementarCantidad, cambioVentana  } = carritosContext;
+    const { carrito, agregarCarrito, incrementarCantidad } = carritosContext;
     
     const validar = (id, producto) => {
        const existe = carrito.find(elemento => elemento.id === id);

@@ -1,7 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import {BsCalendar} from 'react-icons/bs';
-import { MdNavigateNext } from 'react-icons/md';
+import React, {useContext, useEffect} from 'react';
+import styled              from 'styled-components';
+import {BsCalendar}        from 'react-icons/bs';
+import { MdNavigateNext }  from 'react-icons/md';
+
+//context
+import carritoContext from '../../context/carrito/carritoContext';
 
 const ContHistory = styled.div`
     width: 100%;
@@ -51,6 +54,17 @@ const Parrafo = styled.p`
 `;
 
 const History = () => {
+
+    const cartContext = useContext(carritoContext);
+    const { obtenerElementosCart } = cartContext;
+
+    useEffect(() => {
+      
+        obtenerElementosCart(); 
+    
+    }, [])
+
+
     return ( 
 
         <ContHistory>

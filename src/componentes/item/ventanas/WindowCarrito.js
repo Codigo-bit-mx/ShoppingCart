@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
-import styled from 'styled-components';
-import carritosContext from '../../../context/carrito/carritoContext';
-import { HiPlus } from "react-icons/hi";
-import { FaTrashAlt } from "react-icons/fa";
-import { MdRemove } from 'react-icons/md';
+import styled              from 'styled-components';
+import carritosContext     from '../../../context/carrito/carritoContext';
+import productosContext    from '../../../context/productos/productosContext';
+import { HiPlus }          from "react-icons/hi";
+import { FaTrashAlt }      from "react-icons/fa";
+import { MdRemove }        from 'react-icons/md';
 
 const ContITEM = styled.div`
     margin: 16px auto 0 auto;
@@ -89,17 +90,38 @@ const BtnCST = styled.button`
     border-radius: 10px;
     color: white;
 `;
+const DivCesta = styled.div`
+    width: 100%;
+    margin: 3em auto;
+    text-align: center;
+  
+    h4{
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 500;
+        margin-bottom: 1em;
+    }
+
+    img{
+        width: 200px;
+        height: 200px;
+        margin-top: 1em;
+    }
+`;
 
 
 const WindowCarrito = () => {
 
+    const productoContext = useContext(productosContext);
+    const { cambioVentana } = productoContext;
+
     const carritoContext = useContext(carritosContext);
     const { carrito,
-            cambioVentana,
+            guardarCarrito,
             incrementarCantidad,
             decrementarCantidad,
-            eliminarProducto
-             } = carritoContext;
+            eliminarProducto,
+            nombreCarrito
+          } = carritoContext;
 
     const ReducirOBorrar = (cart) => {
         const existe = carrito.find( elementCart => elementCart.id === cart.id);
@@ -109,6 +131,11 @@ const WindowCarrito = () => {
             decrementarCantidad(cart);
         }
     }
+
+    const enviar = (e) => {
+        e.preventDefault();
+        guardarCarrito()
+    }   
 
     return ( 
 
@@ -120,41 +147,55 @@ const WindowCarrito = () => {
            </DivBUTTON>
        </MarcoProduct>
 
-        <h3>Lista de compras</h3>
-
-       {carrito.map((cart) => (
-            <DivShopp key={cart.id}>
-                <p>{cart.nombre}</p>
-            
-            <DivPSC>
-            <span onClick={() => eliminarProducto(cart.id)} ><FaTrashAlt /></span>
-           
-            <span onClick={() =>  ReducirOBorrar(cart)}> <MdRemove /> </span>
-            <BtnPSC>{cart.cantidad}pz</BtnPSC>
-            <span onClick={() => incrementarCantidad(cart)}><HiPlus /> </span>
-            </DivPSC>
-            
-            </DivShopp>
-        ))}
+   
 
        {carrito.length !== 0 
+        
         ? 
 
-       ( <CestaDIV>
+       ( 
+        <div>
+        <h3>Lista de compras</h3>
+      
+        {carrito.map((cart) => (
+             <DivShopp key={cart.id}>
+                 <p>{cart.nombre}</p>
+             
+             <DivPSC>
+             <span onClick={() => eliminarProducto(cart.id)} ><FaTrashAlt /></span>
+            
+             <span onClick={() =>  ReducirOBorrar(cart)}> <MdRemove /> </span>
+             <BtnPSC>{cart.cantidad}pz</BtnPSC>
+             <span onClick={() => incrementarCantidad(cart)}><HiPlus /> </span>
+             </DivPSC>
+             
+             </DivShopp>
+         ))}
+       
+       
+       <CestaDIV>
             <form>
                 <InputCST 
                     name="canasta"
                     type="text"
                     placeholder="Guardar la cesta"
+                    onChange={ e => nombreCarrito(e.target.value) }
                 />
-                <BtnCST>
+                < BtnCST onClick={(e) => enviar(e)} >
                     Guardar
                 </BtnCST>
             </form>
-        </CestaDIV>) 
-         :
+        </CestaDIV>
+        </div>) 
 
-        null}
+        :
+
+        <DivCesta>
+            <h4>Carrito vacio agrega productos</h4>    
+            <img src="img/carro.png"/>
+        </DivCesta>
+        
+        }
 
       </ContITEM>
      

@@ -4,6 +4,7 @@ import { MdDashboard, MdRestore, MdAssessment, MdShoppingCart } from "react-icon
 
 //context
 import dashContext from '../../context/dashbord/dashContext';
+import carritosContext from '../../context/carrito/carritoContext';
 
 const NavegacionDIV = styled.div`
     height: 100%;
@@ -54,6 +55,9 @@ const CampoSPAN = styled.div`
         margin: 0;
         color: white;
     }
+    span{
+        font-size: 15px;
+    }
 `;
 
 
@@ -62,6 +66,9 @@ const Navegacion = () => {
     const dashsContext = useContext(dashContext);
     const { vistaProducto, vistaHistoria, vistaMetricas,
             viewproductos, viewhistory, viewmetricas } = dashsContext;
+    
+    const carritoContext = useContext(carritosContext)
+    const { carrito } = carritoContext;
 
     return ( 
 
@@ -86,11 +93,11 @@ const Navegacion = () => {
               > <p onClick={() => vistaMetricas()}> <MdAssessment /></p> </Li>
           </Ul>
       </CampoUl>
-
+      
       <CampoSPAN>
         
-          <p> <MdShoppingCart/> </p>
-        
+          <p> <MdShoppingCart/> <span>{carrito.length}</span> </p>
+          
       </CampoSPAN>
         
     </NavegacionDIV>
