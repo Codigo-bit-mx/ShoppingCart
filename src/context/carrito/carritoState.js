@@ -7,9 +7,14 @@ import {
     INCREMENTAR_CANTIDAD_CARRITO,
     DECREMENTAR_CANTIDAD_CARRITO,
     ELIMINAR_PRODUCTO_CARRITO,
-    AGREGAR_NOMBRE_CARRITO
+    AGREGAR_NOMBRE_CARRITO,
+    AGREGAR_CARRITO_HISTORIAL,
+    LIMPIEZA_HISTORIAL,
+    RESET_CARRITO,
+    COMPLETADO
 } from '../../types/index';
 import clienteAxios from '../../config/axios';
+import { MdImportContacts } from 'react-icons/md';
 
 // import clienteAxios from '../../config/axios';
 
@@ -18,7 +23,9 @@ const CarritoState = props => {
         carrito: [],
         total: 0,
         nombre: '',
-        productos: []
+        historial: [],
+        cargando: null,
+        completed: false
     }
 
     const [ state, dispatch ] = useReducer (carritoReducer, initialState);
@@ -26,9 +33,7 @@ const CarritoState = props => {
     const guardarCarrito = async () => {
       const carrito = state.carrito;
       const data = {
-            id : '123',
             nombre : state.nombre,
-            fecha : '12-05-2150',
             productos: 
                 carrito.map(car =>  (
                    {
@@ -40,20 +45,39 @@ const CarritoState = props => {
             }
         try {
             await clienteAxios.post('api/carrito', data);
+            dispatch({
+                type: RESET_CARRITO
+            })
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
     const obtenerElementosCart = async () => {
         try{
             const datos = await clienteAxios.get('/api/carrito');
-            console.log(datos)
+            dispatch({
+                type: AGREGAR_CARRITO_HISTORIAL,
+                payload: datos.data.resultado
+            })
         }catch(error){
-            console.log(error)
+            console.log(error);
         }
 
     } 
+
+    const completeCarrito = async (history) => {
+        try {
+            const datos = await clienteAxios.put(`/api/carrito/${history._id}`, history);
+            dispatch({
+                type: COMPLETADO,
+                payload: datos.data.listaExiste 
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
   
     //Funciones para el carrito
     const agregarCarrito = (producto) => {
@@ -90,22 +114,31 @@ const CarritoState = props => {
             payload: nombre
         })
     }
+
+    const limpiezaHistorial = () => {
+        dispatch({
+            type: LIMPIEZA_HISTORIAL
+        })
+    }
    
    
-
-
     return( 
         <carritoContext.Provider
             value={{
                 carrito: state.carrito,
                 info: state.info,
+                historial: state.historial,
+                cargando: state.cargando,
+                nombre: state.nombre,
                 agregarCarrito,
                 incrementarCantidad,
                 decrementarCantidad,
                 eliminarProducto,
                 nombreCarrito,
                 guardarCarrito,
-                obtenerElementosCart
+                obtenerElementosCart,
+                limpiezaHistorial,
+                completeCarrito
             }}
         >
             {props.children}

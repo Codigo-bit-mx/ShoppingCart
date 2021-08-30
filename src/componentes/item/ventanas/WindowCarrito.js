@@ -115,7 +115,8 @@ const WindowCarrito = () => {
     const { cambioVentana } = productoContext;
 
     const carritoContext = useContext(carritosContext);
-    const { carrito,
+    const { nombre, 
+            carrito,
             guardarCarrito,
             incrementarCantidad,
             decrementarCantidad,
@@ -134,7 +135,10 @@ const WindowCarrito = () => {
 
     const enviar = (e) => {
         e.preventDefault();
-        guardarCarrito()
+        if(nombre.trim() !== "" ){
+            guardarCarrito();
+        }
+        console.log("ingresa el nombre al carrito");
     }   
 
     return ( 
@@ -147,7 +151,6 @@ const WindowCarrito = () => {
            </DivBUTTON>
        </MarcoProduct>
 
-   
 
        {carrito.length !== 0 
         

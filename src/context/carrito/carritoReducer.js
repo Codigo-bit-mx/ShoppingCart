@@ -5,7 +5,11 @@ import {
     DECREMENTAR_CANTIDAD_CARRITO,
     ELIMINAR_PRODUCTO_CARRITO,
     VISTAS_DEL_CARRITO,
-    AGREGAR_NOMBRE_CARRITO
+    AGREGAR_NOMBRE_CARRITO,
+    AGREGAR_CARRITO_HISTORIAL,
+    LIMPIEZA_HISTORIAL,
+    RESET_CARRITO,
+    COMPLETADO
 } from '../../types/index';
 
 const carritoReducer =  (state, action) => {
@@ -47,8 +51,27 @@ const carritoReducer =  (state, action) => {
                 ...state,
                 nombre: action.payload
             }
-
+        
         //FUNCIONES CARRITO VISTA HISTORIAL
+
+        case AGREGAR_CARRITO_HISTORIAL: 
+            return {
+                ...state,
+                historial: action.payload
+            }
+        
+        case RESET_CARRITO:
+            return {
+                ...state,
+                carrito: [],
+                nombre: ''
+            }
+
+            case COMPLETADO: 
+            return {
+                ...state,
+                historial: state.historial.map(elem => elem._id === action.payload._id  ? action.payload : elem )
+            }
 
         default: 
             return state;
