@@ -1,13 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import productosContext from '../../context/productos/productosContext';
-import styled from 'styled-components';
-import Categoria from './Categoria';
-import Productos from './Productos';
+import React, { useContext, useEffect, Fragment } from 'react';
+import productosContext                 from '../../context/productos/productosContext';
+import styled                           from 'styled-components';
+import Categoria                        from './Categoria';
+import Productos                        from './Productos';
 
 const ContMarco = styled.div`
     padding: 0em 1em 1em 3em;
 `;
 const Parrafo = styled.p`
+    margin: 20px 20px;
     font-family: 'Quicksand', sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -35,7 +36,7 @@ const ListaTienda = () => {
               }
          });
    
-        productos.map((producto) => { // obtener los productos de ma               
+        productos.forEach((producto) => { // obtener los productos de m              
             if(producto.categoria !== lastCategory) {
                   agregarLista(
                    <Categoria 
@@ -59,13 +60,14 @@ const ListaTienda = () => {
 
     
     return ( 
-
-        <ContMarco>
+        <Fragment>
         <Parrafo> Agrega tus productos al carrito de compras </Parrafo>
-        
+        <ContMarco>
+    
           { cats }
         
         </ContMarco>
+        </Fragment>
      );
 }
  

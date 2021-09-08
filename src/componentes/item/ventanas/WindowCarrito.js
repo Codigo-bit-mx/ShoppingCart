@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import styled              from 'styled-components';
 import carritosContext     from '../../../context/carrito/carritoContext';
 import productosContext    from '../../../context/productos/productosContext';
-import { HiPlus }          from "react-icons/hi";
 import { FaTrashAlt }      from "react-icons/fa";
 import { MdRemove }        from 'react-icons/md';
 
@@ -47,19 +46,25 @@ const DivShopp = styled.div`
         font-family: 'Quicksand', sans-serif;
         font-size: 14px;
         font-weight: bold;
+        text-align: center;
     }
 `;
 const DivPSC = styled.div`
     background: white;
-    margin: 0 16px;
+    margin: 0 13px;
     border-radius: 12px;
     padding: 7px 0;
+    @media(min-width: 1000px){
+        margin: 0 20px;        
+    }
     span {
-        margin-right: 3px;
         font-size: 20px;
         color: #F9A109;
         margin: auto 0;
-    }
+        text-align: center;
+        padding: 0 3px 0 3px;
+       
+ }
 `; 
 const BtnPSC = styled.button`
     /* margin: 4px 1em; */
@@ -70,18 +75,22 @@ const BtnPSC = styled.button`
     background: transparent;
     font-family: 'Quicksand', sans-serif;
     color: #F9A109;
-    margin-right: 10px;
+    margin: 0 10px 0 18px;
 `;
 const CestaDIV = styled.div`
     margin-top: 2em;
-    padding:  1em 10px;
+    padding:  1em 15px;
     background: white;
     border-radius: 12px;
 `;
 const InputCST = styled.input`
+    width: 98%;
     padding: 10px 3px;
     border-radius: 12px;
     border: 1px solid #BDBDBD;
+    margin-bottom: 15px;    
+    font-family: Quicksand, sans-serif;
+    outline: none;
 `;
 const BtnCST = styled.button`
     background: #F9A109;
@@ -89,6 +98,11 @@ const BtnCST = styled.button`
     border: 1px solid #F9A109;
     border-radius: 10px;
     color: white;
+    width: 80px;
+
+    &:hover{
+        background-color: #e49100;
+    }
 `;
 const DivCesta = styled.div`
     width: 100%;
@@ -108,28 +122,42 @@ const DivCesta = styled.div`
     }
 `;
 
+const AlertaParrafo = styled.p`
+    font-family: 'Quicksand',sans-serif;
+    font-size: 13px;
+    color: red;
+    text-align: center;
+    margin-top: 0;
+    /* margin-bottom: 4px; */
+`;
 
 const WindowCarrito = () => {
 
     const productoContext = useContext(productosContext);
-    const { cambioVentana } = productoContext;
+    const { productos, open, aperturaVistas, decrementarVenta, cambioVentana } = productoContext;
 
     const carritoContext = useContext(carritosContext);
     const { nombre, 
             carrito,
+            alerta,
             guardarCarrito,
-            incrementarCantidad,
             decrementarCantidad,
             eliminarProducto,
-            nombreCarrito
+            nombreCarrito,
+            mostrarAlerta
           } = carritoContext;
 
     const ReducirOBorrar = (cart) => {
+       
         const existe = carrito.find( elementCart => elementCart.id === cart.id);
-        if(existe.cantidad === 1) {
+        const existeEnProductos = productos.find(idProducto => idProducto.id === cart.id);
+        if(existe.cantidad === 1 ) {
+            
             eliminarProducto(cart.id);
+            
         }else {
             decrementarCantidad(cart);
+            decrementarVenta(existeEnProductos);
         }
     }
 
@@ -138,7 +166,9 @@ const WindowCarrito = () => {
         if(nombre.trim() !== "" ){
             guardarCarrito();
         }
-        console.log("ingresa el nombre al carrito");
+        //agregar alarma
+            console.log("ingresa el nombre al carrito");
+            mostrarAlerta();
     }   
 
     return ( 
@@ -154,7 +184,7 @@ const WindowCarrito = () => {
 
        {carrito.length !== 0 
         
-        ? 
+       ? 
 
        ( 
         <div>
@@ -166,10 +196,8 @@ const WindowCarrito = () => {
              
              <DivPSC>
              <span onClick={() => eliminarProducto(cart.id)} ><FaTrashAlt /></span>
-            
-             <span onClick={() =>  ReducirOBorrar(cart)}> <MdRemove /> </span>
              <BtnPSC>{cart.cantidad}pz</BtnPSC>
-             <span onClick={() => incrementarCantidad(cart)}><HiPlus /> </span>
+             <span onClick={() =>  ReducirOBorrar(cart)}> <MdRemove /> </span>
              </DivPSC>
              
              </DivShopp>
@@ -177,6 +205,7 @@ const WindowCarrito = () => {
        
        
        <CestaDIV>
+           { alerta ? <AlertaParrafo> !ingresa el nombre de la cesta¡ </AlertaParrafo> : null }
             <form>
                 <InputCST 
                     name="canasta"
@@ -184,6 +213,7 @@ const WindowCarrito = () => {
                     placeholder="Guardar la cesta"
                     onChange={ e => nombreCarrito(e.target.value) }
                 />
+                <br></br>
                 < BtnCST onClick={(e) => enviar(e)} >
                     Guardar
                 </BtnCST>
@@ -194,8 +224,12 @@ const WindowCarrito = () => {
         :
 
         <DivCesta>
-            <h4>Carrito vacio agrega productos</h4>    
-            <img src="img/carro.png"/>
+            <h4>Carrito vacio, presiona cualquier icono del carrito para cerrar o abrir esta ventana</h4>    
+          
+            <div onClick={() => aperturaVistas(open)}>
+            <img src="img/carro.png" alt="carrito compra"/>
+            </div>
+
         </DivCesta>
         
         }

@@ -1,6 +1,6 @@
 import React, {useReducer} from 'react';
-import dashContext from './dashContext';
-import dashReducer from './dashReducer';
+import dashContext         from './dashContext';
+import dashReducer         from './dashReducer';
 
 import {
     VISTA_PRODUCTO,

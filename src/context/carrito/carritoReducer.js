@@ -7,9 +7,10 @@ import {
     VISTAS_DEL_CARRITO,
     AGREGAR_NOMBRE_CARRITO,
     AGREGAR_CARRITO_HISTORIAL,
-    LIMPIEZA_HISTORIAL,
     RESET_CARRITO,
-    COMPLETADO
+    COMPLETADO,
+    MOSTRAR_ALERTA,
+    OCULTAR_ALERTA
 } from '../../types/index';
 
 const carritoReducer =  (state, action) => {
@@ -67,10 +68,22 @@ const carritoReducer =  (state, action) => {
                 nombre: ''
             }
 
-            case COMPLETADO: 
+        case COMPLETADO: 
             return {
                 ...state,
                 historial: state.historial.map(elem => elem._id === action.payload._id  ? action.payload : elem )
+            }
+        
+        case MOSTRAR_ALERTA:
+            return{
+            ...state,
+            alerta: true
+        }
+
+        case OCULTAR_ALERTA:
+            return {
+                ...state,
+                alerta: false
             }
 
         default: 

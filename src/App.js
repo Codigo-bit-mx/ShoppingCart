@@ -1,29 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
-import Navegacion from './componentes/navegacion/Navegacion';
-import Tienda from './componentes/navegacion/Tienda';
-import Item from './componentes/item/Item';
+import React               from 'react';
+import styled              from 'styled-components';
+import Navegacion          from './componentes/navegacion/Navegacion';
+import Tienda              from './componentes/navegacion/Tienda';
+import Item                from './componentes/item/Item';
 
-//context
-import DashState from './context/dashbord/dashState';
-import CarritoState from './context/carrito/carritoState';
+//estados
+import DashState      from './context/dashbord/dashState';
+import CarritoState   from './context/carrito/carritoState';
 import ProductosState from './context/productos/productosState';
 
-const Contenedor = styled.div`
-    width: 100%;
-`;  
-const Marco = styled.div`
-  display: grid;
-  grid-template-columns: 0.3fr 3fr 1fr;
-  grid-gap: 1px;
-`;
-const ConTienda = styled.div`
-  background: #FAFAFB;
-`;
-const ContProducto = styled.div`
-  width: 100%;
-`;
 
+  const Contenedor = styled.div`
+      width: 100%;
+  `;  
+  const Marco = styled.div`
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    @media (min-width: 1000px){
+     grid-template-columns: 0.3fr 3fr 1fr;
+    } 
+    grid-gap: 1px;
+  `;
+  const ConTienda = styled.div`
+    background: #FAFAFB;
+  `;
+  
 
 const App = () =>  {
   
@@ -42,11 +43,9 @@ const App = () =>  {
       <ConTienda>
         <Tienda />
       </ConTienda>
-
-   
-        <Item />
+ 
+      <Item />
      
-
         </Marco>
       </Contenedor>
 

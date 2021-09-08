@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import styled              from 'styled-components';
-import carritosContext     from '../../../context/carrito/carritoContext';
-import productosContext from '../../../context/productos/productosContext';
+import productosContext    from '../../../context/productos/productosContext';
 import { MdUndo }          from "react-icons/md";
 
 const ContWinf = styled.div`

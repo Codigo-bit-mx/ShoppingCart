@@ -1,10 +1,11 @@
 import React, {Fragment, useContext} from 'react';
-import styled from 'styled-components';
+import styled                        from 'styled-components';
 import { MdDashboard, MdRestore, MdAssessment, MdShoppingCart } from "react-icons/md";
 
 //context
-import dashContext from '../../context/dashbord/dashContext';
-import carritosContext from '../../context/carrito/carritoContext';
+import dashContext      from '../../context/dashbord/dashContext';
+import productosContext from '../../context/productos/productosContext';
+import carritosContext  from '../../context/carrito/carritoContext';
 
 const NavegacionDIV = styled.div`
     height: 100%;
@@ -64,8 +65,16 @@ const CampoSPAN = styled.div`
 const Navegacion = () => {
     
     const dashsContext = useContext(dashContext);
-    const { vistaProducto, vistaHistoria, vistaMetricas,
-            viewproductos, viewhistory, viewmetricas } = dashsContext;
+    const { viewproductos,
+            viewhistory,
+            viewmetricas,
+            vistaProducto,
+            vistaHistoria,
+            vistaMetricas,
+             } = dashsContext;
+    
+    const productoContext = useContext(productosContext);
+    const { open, aperturaVistas} = productoContext;
     
     const carritoContext = useContext(carritosContext)
     const { carrito } = carritoContext;
@@ -96,7 +105,7 @@ const Navegacion = () => {
       
       <CampoSPAN>
         
-          <p> <MdShoppingCart/> <span>{carrito.length}</span> </p>
+          <p onClick={ () => aperturaVistas(open) } > <MdShoppingCart/> <span>{carrito.length}</span> </p>
           
       </CampoSPAN>
         

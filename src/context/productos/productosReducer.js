@@ -8,10 +8,15 @@ import {
     AGREGAR_DESCRIPCION,
     AGREGAR_IMAGEN,
     AGREGAR_CATEGORIA,
-    MOSTRAR_ALERTA,
-    OCULTAR_ALERTA
+    MOSTRAR_ALERTA_FORMULARIO,
+    OCULTAR_ALERTA_FORMULARIO,
+    AGREGAR_VENTA_PRODUCTO,
+    INCREMENTAR_VENTA_PRODUCTO,
+    DECREMENTAR_VENTA_PRODUCTO,
+    APERTURA,
 } from '../../types/index';
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
+
 const productosReducer = (state, action) => {
     switch(action.type){
 
@@ -79,16 +84,46 @@ const productosReducer = (state, action) => {
                 categoria: action.payload
             }
         
-        case MOSTRAR_ALERTA: 
+        case MOSTRAR_ALERTA_FORMULARIO: 
             return{
                 ...state,
                 alerta: true
             }
         
-        case OCULTAR_ALERTA: 
+        case OCULTAR_ALERTA_FORMULARIO: 
             return{
                 ...state,
                 alerta: false
+            }
+        
+        case AGREGAR_VENTA_PRODUCTO: 
+            return {
+                ...state,
+                productos: state.productos.map( (x) => 
+                x.id === action.payload.id ? {...action.payload, ventas: 1} : x
+            )
+            }
+
+         case INCREMENTAR_VENTA_PRODUCTO:
+             return{
+                ...state,
+                productos: state.productos.map( (x) => 
+                    x.id === action.payload.id ? {...action.payload, ventas: action.payload.ventas + 1} : x
+                )
+             }
+            
+        case DECREMENTAR_VENTA_PRODUCTO: 
+             return{
+                ...state,
+                productos: state.productos.map( (x) => 
+                    x.id === action.payload.id ? {...action.payload, ventas: action.payload.ventas - 1} : x
+                )
+             }
+        
+        case APERTURA:
+            return{
+                ...state,
+                open: !action.payload
             }
 
         default: 

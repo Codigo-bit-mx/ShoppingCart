@@ -1,24 +1,28 @@
-import React, {useState, useContext, useEffect} from 'react';
-import carritoContext from '../../context/carrito/carritoContext';
-import styled from 'styled-components';
-import {BsCalendar}        from 'react-icons/bs';
-import { MdNavigateNext }  from 'react-icons/md';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import { Fragment } from 'react';
+import React, {useState, useContext, Fragment} from 'react';
+import carritoContext                           from '../../context/carrito/carritoContext';
+import styled                                   from 'styled-components';
+import {BsCalendar}                             from 'react-icons/bs';
+import { MdNavigateNext }                       from 'react-icons/md';
+import { makeStyles }                           from '@material-ui/core/styles';
+import Modal                                    from '@material-ui/core/Modal';
+import Backdrop                                 from '@material-ui/core/Backdrop';
+import Fade                                     from '@material-ui/core/Fade';
+
 
 const LI = styled.li`
-    display: grid;
-    grid-template-columns: 50% 25% 15% 10%;
-    grid-template-rows: 1fr;
     background: #fff;
     padding: 8px 6px;
     box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 12px;
     margin: 1em 0;
-    p{
+
+    @media(min-width: 768px){
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 50% 25% 15% 10%;
+    }
+    p{  
+       
         margin: 10px 0;
         font-family: 'Quicksand', sans-serif;
         font-style: normal;
@@ -32,7 +36,8 @@ const LI = styled.li`
         border: ${({completado}) => completado ? '1px solid #56CCF2' : '1px solid red'} ;
         box-sizing: border-box;
         border-radius: 8px;
-    }
+        width: 100%;
+      }
 `;
 const Parrafo = styled.p`
     text-align: end;
@@ -117,7 +122,7 @@ const ListaHistory = ({history}) => {
         : (<button onClick={() => cambiarState(history)}> Incompleted </button>)
         }        
 
-        <Parrafo onClick={() => {handleOpen()}}> <span><MdNavigateNext /></span> </Parrafo>
+        <Parrafo onClick={() => {handleOpen()}}> <span> <MdNavigateNext /> </span></Parrafo>
         </LI>
 
         <Modal

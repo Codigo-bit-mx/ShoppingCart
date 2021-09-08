@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import styled              from 'styled-components';
-import carritosContext     from '../../../context/carrito/carritoContext';
 import productosContext    from '../../../context/productos/productosContext';
 
 const MarcoForm = styled.div`
@@ -37,7 +36,11 @@ const TextAREA = styled.textarea`
 const ContentBTN = styled.div`
     
     margin: 2em auto;
-    padding: 0 1em;
+    padding: 0 0em;
+
+    @media(min-width: 1000px){
+        padding: 0 1em;
+    }
 `;
 const BtnSave = styled.button`
     background-color: #F9A109;
@@ -47,6 +50,7 @@ const BtnSave = styled.button`
     border: none;
     color: white;
     border-radius: 12px;
+    cursor: pointer;
 `;
 const BtnCancel = styled.button`
     background-color: #FFF;
@@ -56,6 +60,16 @@ const BtnCancel = styled.button`
     border: none;
     color: black;
     border-radius: 12px;
+    cursor: pointer;
+`;
+
+const ParrafoAlerta = styled.p`
+    text-align: center;
+    font-size: 13px;
+    color: red;
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    margin-top: 2em;
 `;
 
 const WindowNew = () => {
@@ -66,6 +80,7 @@ const WindowNew = () => {
             ruta,
             categoria,
             addProducto,
+            alerta,
             subirIMG,
             cambioVentana,
             agregarNombre,
@@ -93,7 +108,9 @@ const WindowNew = () => {
         <MarcoForm>   
 
          <p>Nuevo producto</p>
-            
+
+         {alerta ? <ParrafoAlerta>Ingresa todos los datos !</ParrafoAlerta> : null}
+         
             <Form>
                 <Label htmlFor="nombre">Nombre:</Label>
                 <Input 
@@ -130,6 +147,7 @@ const WindowNew = () => {
                     onChange={ e => agregarCategoria(e.target.value) }
                     />
             </Form>
+
 
             <ContentBTN>
                 <BtnCancel onClick={() => cambioVentana('item')}>Cancelar</BtnCancel>

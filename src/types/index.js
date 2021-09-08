@@ -13,8 +13,12 @@ export const AGREGAR_NOMBRE             = 'AGREGAR_NOMBRE';
 export const AGREGAR_DESCRIPCION        = 'AGREGAR_DESCRIPCION';
 export const AGREGAR_IMAGEN             = 'AGREGAR_IMAGEN'
 export const AGREGAR_CATEGORIA          = 'AGREGAR_CATEGORIA';
-export const MOSTRAR_ALERTA             = 'MOSTRAR_ALERTA';
-export const OCULTAR_ALERTA             = 'OCULTAR_ALERTA';
+export const MOSTRAR_ALERTA_FORMULARIO  = 'MOSTRAR_ALERTA';
+export const OCULTAR_ALERTA_FORMULARIO  = 'OCULTAR_ALERTA';
+export const AGREGAR_VENTA_PRODUCTO     = 'AGREGAR_VENTA_PRODUCTO';
+export const INCREMENTAR_VENTA_PRODUCTO = 'INCREMENTAR_VENTA_PRODUCTO';
+export const DECREMENTAR_VENTA_PRODUCTO = 'DECREMENTAR_VENTA_PRODUCTO';
+export const APERTURA                   = 'APERTURA';
 
 //carrito
 export const AGREGAR_PRODUCTO_CARRITO     = 'AGREGAR_PRODUCTO_CARRITO';
@@ -27,3 +31,5 @@ export const AGREGAR_CARRITO_HISTORIAL    = 'AGREGAR_CARRITO_HISTORIAL';
 export const LIMPIEZA_HISTORIAL           = 'LIMPIEZA_HISTORIAL';
 export const RESET_CARRITO                = 'RESET_CARRITO';
 export const COMPLETADO                   = 'COMPLETADO';
+export const MOSTRAR_ALERTA               = 'MOSTRAR_ALERTA';
+export const OCULTAR_ALERTA               = 'OCULTAR_ALERTA';

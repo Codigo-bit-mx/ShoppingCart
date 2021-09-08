@@ -1,9 +1,8 @@
 import React, {useContext, useEffect} from 'react';
-import styled              from 'styled-components';
-import ListaHistory from './ListaHistory';
-//context
-import carritoContext from '../../context/carrito/carritoContext';
-import { identifier } from '@babel/types';
+import styled                         from 'styled-components';
+import ListaHistory                   from './ListaHistory';
+import carritoContext                 from '../../context/carrito/carritoContext';
+
 
 const ContHistory = styled.div`
     width: 100%;
@@ -25,12 +24,11 @@ const UL = styled.ul`
 const History = () => {
 
     const cartContext = useContext(carritoContext);
-    const { historial, cleanHistory, obtenerElementosCart } = cartContext;
+    const { historial, obtenerElementosCart } = cartContext;
 
     useEffect(() => {
         obtenerElementosCart(); 
-    }, [])
-
+    }, )
 
     return ( 
 

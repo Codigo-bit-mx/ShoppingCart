@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
-import carritoContext from './carritoContext';
-import carritoReducer from './carritoReducer';
+import carritoContext        from './carritoContext';
+import carritoReducer        from './carritoReducer';
+import clienteAxios          from '../../config/axios';
 
 import {
     AGREGAR_PRODUCTO_CARRITO,
@@ -11,12 +12,10 @@ import {
     AGREGAR_CARRITO_HISTORIAL,
     LIMPIEZA_HISTORIAL,
     RESET_CARRITO,
-    COMPLETADO
+    COMPLETADO,
+    MOSTRAR_ALERTA,
+    OCULTAR_ALERTA
 } from '../../types/index';
-import clienteAxios from '../../config/axios';
-import { MdImportContacts } from 'react-icons/md';
-
-// import clienteAxios from '../../config/axios';
 
 const CarritoState = props => {
     const initialState = {
@@ -25,7 +24,8 @@ const CarritoState = props => {
         nombre: '',
         historial: [],
         cargando: null,
-        completed: false
+        completed: false,
+        alerta: false
     }
 
     const [ state, dispatch ] = useReducer (carritoReducer, initialState);
@@ -40,9 +40,11 @@ const CarritoState = props => {
                      id: car.id,
                      nombre: car.nombre, 
                      cantidad: car.cantidad,
+                     categoria: car.categoria
                    } 
                ))
             }
+
         try {
             await clienteAxios.post('api/carrito', data);
             dispatch({
@@ -73,19 +75,19 @@ const CarritoState = props => {
                 type: COMPLETADO,
                 payload: datos.data.listaExiste 
             })
-
         } catch (error) {
             console.log(error);
         }
     }
   
     //Funciones para el carrito
-    const agregarCarrito = (producto) => {
+    const agregarCarrito = async(producto) => {
         dispatch({
             type: AGREGAR_PRODUCTO_CARRITO,
             payload: producto
         })
     }
+      
 
     const incrementarCantidad = (existe) => {
         dispatch({
@@ -121,6 +123,17 @@ const CarritoState = props => {
         })
     }
    
+    const mostrarAlerta = () => {
+        dispatch({
+            type: MOSTRAR_ALERTA
+        });
+
+    setTimeout(() => {
+            dispatch({
+                type: OCULTAR_ALERTA
+            })
+        }, 3000)
+    }
    
     return( 
         <carritoContext.Provider
@@ -130,6 +143,7 @@ const CarritoState = props => {
                 historial: state.historial,
                 cargando: state.cargando,
                 nombre: state.nombre,
+                alerta: state.alerta,
                 agregarCarrito,
                 incrementarCantidad,
                 decrementarCantidad,
@@ -138,7 +152,8 @@ const CarritoState = props => {
                 guardarCarrito,
                 obtenerElementosCart,
                 limpiezaHistorial,
-                completeCarrito
+                completeCarrito,
+                mostrarAlerta
             }}
         >
             {props.children}

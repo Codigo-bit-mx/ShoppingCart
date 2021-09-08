@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import productosContext      from './productosContext';
 import productosReducer      from './productosReducer';
-
+import clienteAxios          from '../../config/axios';
 import {
         NUEVO_PRODUCTO,
         OBTENER_PRODUCTOS,
@@ -12,11 +12,14 @@ import {
         AGREGAR_DESCRIPCION,
         AGREGAR_IMAGEN,
         AGREGAR_CATEGORIA,
-        MOSTRAR_ALERTA,
-        OCULTAR_ALERTA
-
+        MOSTRAR_ALERTA_FORMULARIO,
+        OCULTAR_ALERTA_FORMULARIO,
+        AGREGAR_VENTA_PRODUCTO,
+        INCREMENTAR_VENTA_PRODUCTO,
+        DECREMENTAR_VENTA_PRODUCTO,
+        APERTURA
 } from '../../types';
-import clienteAxios         from '../../config/axios';
+
 
 const ProductosState = props => {
 
@@ -30,7 +33,8 @@ const ProductosState = props => {
         ruta: '',
         categoria: '',
         alerta:  false,
-        cargando: null
+        cargando: null, 
+        open: true
     }
 
  const [ state, dispatch ] = useReducer (productosReducer, initialState);
@@ -79,6 +83,55 @@ const ProductosState = props => {
         })
     }
 
+    const agregarVenta = async(existeEnProductos) => {
+        dispatch({
+            type: AGREGAR_VENTA_PRODUCTO,
+            payload: existeEnProductos
+        })
+        try{
+            const productos = state.productos;
+            const producto = productos.find(IDproductos =>  IDproductos.id === existeEnProductos.id);
+            await clienteAxios.put(`/api/productos/${producto._id}`, producto);
+        }catch(error){
+            console.log(error);
+        }
+    }
+    
+    const incrementarVenta = async(existeEnProductos) => {
+        dispatch({
+            type: INCREMENTAR_VENTA_PRODUCTO,
+            payload: existeEnProductos
+        });
+    try{
+        const productos = state.productos;
+        const producto = productos.find(IDproductos =>  IDproductos.id === existeEnProductos.id);
+        console.log(producto);
+        await clienteAxios.put(`/api/productos/${producto._id}`, producto);
+
+    }catch(error){
+        console.log(error);
+    }
+    }
+
+    const decrementarVenta = async(existeEnProductos) => {
+        
+        dispatch({
+            type: DECREMENTAR_VENTA_PRODUCTO,
+            payload: existeEnProductos
+        })
+
+         try{
+            const productos = state.productos;
+            const producto = productos.find(IDproductos => IDproductos.id === existeEnProductos.id);
+            console.log(producto);
+            await clienteAxios.put(`/api/productos/${producto._id}`, producto);
+        }catch(error){
+            console.log(error);
+         }
+    }
+
+    
+
     //SUBIR IMAGEN
     const subirIMG = async(formData) => {
         try{
@@ -87,7 +140,6 @@ const ProductosState = props => {
                 type: AGREGAR_IMAGEN,
                 payload: img.data.ruta
             })
-
         }catch (error) {
             console.log(error);
         }
@@ -126,16 +178,24 @@ const ProductosState = props => {
 
     const mostrarAlerta = () => {
        dispatch({
-            type: MOSTRAR_ALERTA
+            type: MOSTRAR_ALERTA_FORMULARIO
        }) 
 
        setTimeout(() => {
         dispatch({
-            type: OCULTAR_ALERTA
+            type: OCULTAR_ALERTA_FORMULARIO
         })
-       }, 3000)
+       }, 3000);
     }
 
+    
+    //apertura de la ventana lateral
+    const aperturaVistas = (open) => {
+       dispatch({
+           type: APERTURA,
+           payload: open
+       })
+    }
     
 
 return(
@@ -151,16 +211,21 @@ return(
             categoria: state.categoria,
             alerta: state.alerta,
             cargando: state.cargando,
+            open: state.open,
             obtenerProductos,
             agregarLista,
             addProducto,
+            agregarVenta,
+            incrementarVenta,
+            decrementarVenta,
             subirIMG,
             clearCategorias,
             cambioVentana,
             agregarNombre,
             agrgearDescripcion,
             agregarCategoria,
-            mostrarAlerta
+            mostrarAlerta,
+            aperturaVistas
         }}
         > 
         {props.children}

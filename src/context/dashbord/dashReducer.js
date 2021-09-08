@@ -5,7 +5,7 @@ import {
   
 } from '../../types/index';
 
-export default (state, action) => {
+const dashReducer = (state, action) => {
     switch(action.type){
 
         case VISTA_PRODUCTO:
@@ -36,3 +36,5 @@ export default (state, action) => {
             return state;
     }
 }
+
+export default dashReducer;
